@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Task from '../Task';
 import TaskForm from '../dashboardComp/TaskForm';
+import TagForm from '../dashboardComp/TagForm'
 
 function Dashboard() {
   const[tasks, setTasks] = useState([]);
@@ -46,13 +47,28 @@ function Dashboard() {
     await displayTasks();
   }
 
+  async function addTag(name) {
+  const exists = tags.some(tag => tag.name.toLowerCase() === name.toLowerCase());
+  if (exists) {
+    return;
+  }
+  await fetch('http://127.0.0.1:3010/tags', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: name, additional_data: '' }),
+  });
+  await displayTags();
+}
+
 
   return(
     <div>
       <header>
         <h1>DASHBOARD PAGE</h1>
         <p>total task : {tasks.length}</p>
-        <TaskForm addTask={addTask}></TaskForm>
+        <TaskForm addTask = {addTask}></TaskForm>
+        <TagForm addTag = {addTag}></TagForm>
+        <p>Tags: {tags.map(tag => tag.name).join(', ')}</p>
       </header>
      
       {tasks.map(task => (
