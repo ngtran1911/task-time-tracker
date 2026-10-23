@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import Task from '../Task';
 import TaskForm from '../dashboardComp/TaskForm';
-import TaskList from '../dashboardComp/TaskList';
 
 function Dashboard() {
   const[tasks, setTasks] = useState([]);
@@ -37,6 +36,15 @@ function Dashboard() {
     await fetch (`http://127.0.0.1:3010/tasks/${id}`, {method : 'DELETE'});
     await displayTasks();
   }
+  
+  async function addTask(name){
+    await fetch ('http://127.0.0.1:3010/tasks', {
+      method : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({name:name, tags: '', additional_data: '' }),
+    })
+    await displayTasks();
+  }
 
 
   return(
@@ -44,6 +52,7 @@ function Dashboard() {
       <header>
         <h1>DASHBOARD PAGE</h1>
         <p>total task : {tasks.length}</p>
+        <TaskForm addTask={addTask}></TaskForm>
       </header>
      
       {tasks.map(task => (
