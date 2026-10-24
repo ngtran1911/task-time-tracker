@@ -74,7 +74,14 @@ function Dashboard() {
   function removeTagFromTask(task, tagId) {
     return updateTaskTags(task, removeTagId(task.tags, tagId))
   }
-
+  async function renameTask(task, newName) {
+    await fetch(`http://127.0.0.1:3010/tasks/${task.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: newName }),
+    });
+  await displayTasks();
+  }
 
 
   return (
@@ -93,6 +100,7 @@ function Dashboard() {
         taskTags={getTaskTag(task)}
         allTags={tags}
         onDelete={() => deleteTask(task.id)}
+        onRename ={(newName) => renameTask(task, newName)}
         onAddTag={(tagId) => addTagtoTask(task, tagId)}
         onRemoveTag={(tagId) => removeTagFromTask(task, tagId)}
       />

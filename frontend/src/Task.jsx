@@ -1,11 +1,45 @@
-function Task({ name, taskTags, allTags, onDelete, onAddTag, onRemoveTag }) {
+import { useState } from 'react';
+
+function Task({ name, taskTags, allTags, onDelete, onAddTag, onRemoveTag, onRename }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState('');
+
   const missingTags = allTags.filter(
     tag => !taskTags.some(t => t.id === tag.id)
   );
 
+  function startEdit() {
+    setDraft(name);
+    setEditing(true);
+  }
+
+  function save(e) {
+    e.preventDefault();
+    const newName = draft.trim();
+    if (newName && newName !== name) {
+      onRename(newName);
+    }
+    setEditing(false);
+  }
+
   return (
     <div className="task">
-      <h3>{name}</h3>
+      {editing ? (
+        <form onSubmit={save}>
+          <input
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            aria-label="Task name"
+          />
+          <button type="submit">Save</button>
+          <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+        </form>
+      ) : (
+        <>
+          <h3>{name}</h3>
+          <button onClick={startEdit} aria-label={`Rename ${name}`}>Rename</button>
+        </>
+      )}
 
       <div className="tags">
         {taskTags.map(tag => (
@@ -14,7 +48,9 @@ function Task({ name, taskTags, allTags, onDelete, onAddTag, onRemoveTag }) {
             <button
               onClick={() => onRemoveTag(tag.id)}
               aria-label={`Remove tag ${tag.name} from ${name}`}
-            > X </button>
+            >
+              x
+            </button>
           </span>
         ))}
       </div>
@@ -27,6 +63,7 @@ function Task({ name, taskTags, allTags, onDelete, onAddTag, onRemoveTag }) {
               onAddTag(Number(e.target.value));
             }
           }}
+          aria-label={`Add tag to ${name}`}
         >
           <option value="">Add tag...</option>
           {missingTags.map(tag => (
@@ -35,7 +72,7 @@ function Task({ name, taskTags, allTags, onDelete, onAddTag, onRemoveTag }) {
         </select>
       )}
 
-      <button onClick={onDelete}>Remove</button>
+      <button onClick={onDelete} aria-label={`Remove ${name}`}>Remove</button>
     </div>
   );
 }
