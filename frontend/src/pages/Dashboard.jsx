@@ -3,10 +3,12 @@ import Task from '../Task';
 import TaskForm from '../dashboardComp/TaskForm';
 import TagForm from '../dashboardComp/TagForm'
 import { addTagId, removeTagId } from '../tagUtils';
+import { isActive, formatTimestamp } from '../Timeutils';
 
 function Dashboard() {
   const[tasks, setTasks] = useState([]);
   const[tags, setTags] = useState([]);
+  const [timestamps, setTimestamps] = useState([])
   
   async function displayTasks() {
     const res = await fetch('http://127.0.0.1:3010/tasks')
@@ -20,6 +22,7 @@ function Dashboard() {
   useEffect(() => {
     displayTasks();
     displayTags();
+    displayTimestamp();
   }, []);
 
   function getTaskTag(task) {
@@ -67,6 +70,7 @@ function Dashboard() {
     });
     await displayTasks();
   }
+
   function addTagtoTask(task, tagId){
     return updateTaskTags(task, addTagId(task.tags, tagId));
   }
@@ -74,6 +78,7 @@ function Dashboard() {
   function removeTagFromTask(task, tagId) {
     return updateTaskTags(task, removeTagId(task.tags, tagId))
   }
+
   async function renameTask(task, newName) {
     await fetch(`http://127.0.0.1:3010/tasks/${task.id}`, {
       method: 'PATCH',
@@ -82,6 +87,26 @@ function Dashboard() {
     });
   await displayTasks();
   }
+  
+  async function displayTimestamp(){
+    const response = await fetch('http://127.0.0.1:3010/timestamps');
+    setTimestamps(await response.json());
+  }
+  
+
+  function taskIsActive(task) {
+    return isActive(timestamps.filter(s => Number(s.task) === task.id));
+  }
+  
+  async function toggleTask(task) {
+    const type = taskIsActive(task) ? 1 : 0;
+    await fetch('http://127.0.0.1:3010/timestamps', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ timestamp: formatTimestamp(), task: task.id, type }),
+    });
+  await displayTimestamp();
+}
 
 
   return (
@@ -103,6 +128,8 @@ function Dashboard() {
         onRename ={(newName) => renameTask(task, newName)}
         onAddTag={(tagId) => addTagtoTask(task, tagId)}
         onRemoveTag={(tagId) => removeTagFromTask(task, tagId)}
+        active={taskIsActive(task)}
+        onToggle={() => toggleTask(task)}
       />
     ))}
   </div>

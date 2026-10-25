@@ -12,3 +12,5 @@ export function removeTagId(tagsText, id) {
     .filter(x => x !== '' && x !== String(id))
     .join(',');
 }
+
+
