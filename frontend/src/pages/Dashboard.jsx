@@ -5,6 +5,7 @@ import TagForm from '../dashboardComp/TagForm'
 import { addTagId, removeTagId } from '../tagUtils';
 import { isActive, formatTimestamp } from '../Timeutils';
 
+
 function Dashboard() {
   const[tasks, setTasks] = useState([]);
   const[tags, setTags] = useState([]);
@@ -122,6 +123,7 @@ function Dashboard() {
       <p>total task : {tasks.length}</p>
       <TaskForm addTask={addTask} />
       <TagForm addTag={addTag} />
+      
     </header>
 
     {tasks.map(task => (

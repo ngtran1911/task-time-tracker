@@ -1,16 +1,5 @@
 import { useState } from 'react';
-import { activityIntervals, activeSeconds, formatDuration, formatTimestamp,} from '../Timeutils';
-
-// Date -> "2026-10-26T00:00:00", the text a datetime-local input wants
-function toInputValue(date) {
-  return formatTimestamp(date).slice(0, 19).replace(' ', 'T');
-}
-
-function startOfToday() {
-  const d = new Date();
-  d.setHours(0, 0, 0, 0);
-  return d;
-}
+import { activityIntervals, activeSeconds, formatDuration, toInputValue, startOfToday} from '../Timeutils';
 
 function TaskTotals({ tasks, timestamps }) {
   const [from, setFrom] = useState(toInputValue(startOfToday()));

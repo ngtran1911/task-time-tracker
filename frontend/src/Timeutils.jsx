@@ -63,3 +63,12 @@ export function formatDuration(totalSeconds) {
   return `${h} h ${m} min ${s % 60} s`;
 }
 
+export function toInputValue(date) {
+  return formatTimestamp(date).slice(0, 19).replace(' ', 'T');
+}
+
+export function startOfToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
