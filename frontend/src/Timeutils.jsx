@@ -15,6 +15,7 @@ export function parseTimestamp(text) {
   return new Date(text.replace(' ', 'T'));
 }
 
+
 // All timestamps of ONE task -> true if its latest one is a start
 export function isActive(stamps) {
   if (stamps.length === 0) {
@@ -27,3 +28,38 @@ export function isActive(stamps) {
   });
   return Number(latest.type) === 0;
 }
+export function activityIntervals(stamps) {
+  const sorted = [...stamps].sort((a, b) =>
+    a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : a.id - b.id
+  );
+  const intervals = [];
+  let open = null;
+  for (const s of sorted) {
+    if (Number(s.type) === 0) {
+      if (!open) open = parseTimestamp(s.timestamp);
+    } else if (open) {
+      intervals.push({ start: open, end: parseTimestamp(s.timestamp) });
+      open = null;
+    }
+  }
+  if (open) intervals.push({ start: open, end: null });
+  return intervals;
+}
+
+export function activeSeconds(intervals, rangeStart, rangeEnd, now = new Date()) {
+  let total = 0;
+  for (const { start, end } of intervals) {
+    const from = Math.max(start, rangeStart);
+    const to = Math.min(end ?? now, rangeEnd, now);
+    if (to > from) total += (to - from) / 1000;
+  }
+  return total;
+}
+
+export function formatDuration(totalSeconds) {
+  const s = Math.round(totalSeconds);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  return `${h} h ${m} min ${s % 60} s`;
+}
+

@@ -35,9 +35,15 @@ function Dashboard() {
     .filter(tag => tag);
   }
 
-  async function deleteTask(id){
-    await fetch (`http://127.0.0.1:3010/tasks/${id}`, {method : 'DELETE'});
+  async function deleteTask(id) {
+    const res = await fetch(`http://127.0.0.1:3010/timesfortask/${id}`);
+    const stamps = await res.json();
+    for (const stamp of stamps) {
+      await fetch(`http://127.0.0.1:3010/timestamps/${stamp.id}`, { method: 'DELETE' });
+    }
+    await fetch(`http://127.0.0.1:3010/tasks/${id}`, { method: 'DELETE' });
     await displayTasks();
+    await displayTimestamp();
   }
   
   async function addTask(name){
@@ -97,7 +103,7 @@ function Dashboard() {
   function taskIsActive(task) {
     return isActive(timestamps.filter(s => Number(s.task) === task.id));
   }
-  
+
   async function toggleTask(task) {
     const type = taskIsActive(task) ? 1 : 0;
     await fetch('http://127.0.0.1:3010/timestamps', {
