@@ -1,33 +1,45 @@
-import { useState } from 'react';
-import { activityIntervals, activeSeconds, formatDuration, toInputValue, startOfToday} from '../Timeutils';
+import { useState } from "react";
+import {
+  activityIntervals,
+  activeSeconds,
+  formatDuration,
+  toInputValue,
+  startOfToday,
+} from "../Timeutils";
 
 function TaskTotals({ tasks, timestamps }) {
   const [from, setFrom] = useState(toInputValue(startOfToday()));
-  const [to, setTo] = useState(toInputValue(new Date()));
+  const [to, setTo] = useState(null);
 
   function resetToToday() {
     setFrom(toInputValue(startOfToday()));
-    setTo(toInputValue(new Date()));
+    setTo(null);
   }
 
+  const now = new Date();
   const rangeStart = new Date(from);
-  const rangeEnd = new Date(to);
+  const rangeEnd = to === null ? now : new Date(to);
   const validRange = rangeStart < rangeEnd;
 
   const rows = tasks
-    .map(task => {
-      const stamps = timestamps.filter(s => Number(s.task) === task.id);
-      const seconds = activeSeconds(activityIntervals(stamps), rangeStart, rangeEnd);
+    .map((task) => {
+      const stamps = timestamps.filter((s) => Number(s.task) === task.id);
+      const seconds = activeSeconds(
+        activityIntervals(stamps),
+        rangeStart,
+        rangeEnd,
+        now,
+      );
       return { id: task.id, name: task.name, seconds };
     })
-    .filter(row => row.seconds > 0);
+    .filter((row) => row.seconds > 0);
 
   return (
-    <section>
+    <section className="panel">
       <h2>Task totals</h2>
 
       <label>
-        From{' '}
+        From{" "}
         <input
           type="datetime-local"
           step="1"
@@ -36,11 +48,11 @@ function TaskTotals({ tasks, timestamps }) {
         />
       </label>
       <label>
-        To{' '}
+        To{" "}
         <input
           type="datetime-local"
           step="1"
-          value={to}
+          value={to === null ? toInputValue(now) : to}
           onChange={(e) => setTo(e.target.value)}
         />
       </label>
@@ -59,7 +71,7 @@ function TaskTotals({ tasks, timestamps }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(row => (
+            {rows.map((row) => (
               <tr key={row.id}>
                 <td>{row.name}</td>
                 <td>{formatDuration(row.seconds)}</td>

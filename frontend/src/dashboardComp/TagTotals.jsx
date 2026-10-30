@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   activityIntervals,
   activeSeconds,
   formatDuration,
   toInputValue,
   startOfToday,
-} from '../Timeutils';
+} from "../Timeutils";
 
 function TagTotals({ tasks, tags, timestamps }) {
   const [from, setFrom] = useState(toInputValue(startOfToday()));
@@ -23,27 +23,33 @@ function TagTotals({ tasks, tags, timestamps }) {
 
   const secondsByTask = {};
   for (const task of tasks) {
-    const stamps = timestamps.filter(s => Number(s.task) === task.id);
+    const stamps = timestamps.filter((s) => Number(s.task) === task.id);
     secondsByTask[task.id] = activeSeconds(
-      activityIntervals(stamps), rangeStart, rangeEnd, now
+      activityIntervals(stamps),
+      rangeStart,
+      rangeEnd,
+      now,
     );
   }
 
   const rows = tags
-    .map(tag => {
+    .map((tag) => {
       const seconds = tasks
-        .filter(task => task.tags && task.tags.split(',').map(Number).includes(tag.id))
+        .filter(
+          (task) =>
+            task.tags && task.tags.split(",").map(Number).includes(tag.id),
+        )
         .reduce((sum, task) => sum + secondsByTask[task.id], 0);
       return { id: tag.id, name: tag.name, seconds };
     })
-    .filter(row => row.seconds > 0);
+    .filter((row) => row.seconds > 0);
 
   return (
-    <section>
+    <section className="panel">
       <h2>Total time per tag</h2>
 
       <label>
-        Tag interval from{' '}
+        Tag interval from{" "}
         <input
           type="datetime-local"
           step="1"
@@ -52,7 +58,7 @@ function TagTotals({ tasks, tags, timestamps }) {
         />
       </label>
       <label>
-        to{' '}
+        to{" "}
         <input
           type="datetime-local"
           step="1"
@@ -75,7 +81,7 @@ function TagTotals({ tasks, tags, timestamps }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(row => (
+            {rows.map((row) => (
               <tr key={row.id}>
                 <td>{row.name}</td>
                 <td>{formatDuration(row.seconds)}</td>

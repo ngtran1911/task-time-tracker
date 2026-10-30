@@ -1,5 +1,5 @@
 function pad(n, size = 2) {
-  return String(n).padStart(size, '0');
+  return String(n).padStart(size, "0");
 }
 // Date -> "2026-10-24 16:30:00.000" (local time, same shape as the server's text)
 export function formatTimestamp(date = new Date()) {
@@ -12,9 +12,8 @@ export function formatTimestamp(date = new Date()) {
 
 // "2026-10-24 16:30:00.000" -> Date (read as local time; the reports will need this)
 export function parseTimestamp(text) {
-  return new Date(text.replace(' ', 'T'));
+  return new Date(text.replace(" ", "T"));
 }
-
 
 // All timestamps of ONE task -> true if its latest one is a start
 export function isActive(stamps) {
@@ -30,7 +29,11 @@ export function isActive(stamps) {
 }
 export function activityIntervals(stamps) {
   const sorted = [...stamps].sort((a, b) =>
-    a.timestamp < b.timestamp ? -1 : a.timestamp > b.timestamp ? 1 : a.id - b.id
+    a.timestamp < b.timestamp
+      ? -1
+      : a.timestamp > b.timestamp
+        ? 1
+        : a.id - b.id,
   );
   const intervals = [];
   let open = null;
@@ -46,7 +49,12 @@ export function activityIntervals(stamps) {
   return intervals;
 }
 
-export function activeSeconds(intervals, rangeStart, rangeEnd, now = new Date()) {
+export function activeSeconds(
+  intervals,
+  rangeStart,
+  rangeEnd,
+  now = new Date(),
+) {
   let total = 0;
   for (const { start, end } of intervals) {
     const from = Math.max(start, rangeStart);
@@ -64,7 +72,7 @@ export function formatDuration(totalSeconds) {
 }
 
 export function toInputValue(date) {
-  return formatTimestamp(date).slice(0, 19).replace(' ', 'T');
+  return formatTimestamp(date).slice(0, 19).replace(" ", "T");
 }
 
 export function startOfToday() {

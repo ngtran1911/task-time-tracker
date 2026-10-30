@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" width="640" height="440" role="img">
+  <title>mimi.tracking logo: a white and orange cat lying down hugging a stopwatch</title>
+  <defs>
+    <clipPath id="body-clip"><ellipse cx="385" cy="285" rx="225" ry="98"/></clipPath>
+    <clipPath id="head-clip"><ellipse cx="150" cy="245" rx="92" ry="78"/></clipPath>
+  </defs>
+  <g stroke="#2D3A47" stroke-linejoin="round" stroke-linecap="round">
+    <!-- tail (behind) -->
+    <path d="M590 300 C640 340 600 410 500 400 C470 397 455 385 450 372" fill="none" stroke-width="40"/>
+    <path d="M590 300 C640 340 600 410 500 400 C470 397 455 385 450 372" fill="none" stroke="#F1AA6B" stroke-width="28"/>
+    <path d="M626 338 L606 346 M612 380 L594 366 M575 402 L566 382 M535 403 L534 383 M497 398 L503 380" fill="none" stroke="#E08A45" stroke-width="7"/>
+
+    <!-- body -->
+    <ellipse cx="385" cy="285" rx="225" ry="98" fill="#FFFDF8" stroke-width="6"/>
+    <g clip-path="url(#body-clip)" stroke="none">
+      <ellipse cx="545" cy="235" rx="62" ry="44" fill="#F1AA6B"/>
+      <ellipse cx="500" cy="345" rx="48" ry="30" fill="#F1AA6B"/>
+    </g>
+    <!-- hind foot -->
+    <ellipse cx="545" cy="372" rx="48" ry="22" fill="#FFFDF8" stroke-width="6"/>
+    <path d="M520 385 V374 M540 388 V376 M560 388 V376" fill="none" stroke-width="4"/>
+
+    <!-- ears -->
+    <path d="M85 215 Q60 160 82 128 Q125 140 160 185 Z" fill="#F1AA6B" stroke-width="6"/>
+    <path d="M185 190 Q205 135 245 118 Q268 150 245 205 Z" fill="#F1AA6B" stroke-width="6"/>
+    <path d="M96 190 Q82 160 90 145 Q114 155 135 180 Z" fill="#F7C8D3" stroke="none"/>
+    <path d="M205 185 Q218 155 238 143 Q248 160 240 190 Z" fill="#F7C8D3" stroke="none"/>
+    <!-- head -->
+    <ellipse cx="150" cy="245" rx="92" ry="78" fill="#FFFDF8" stroke="none"/>
+    <g clip-path="url(#head-clip)" stroke="none">
+      <path d="M50 150 H260 V225 C215 205 190 215 160 232 C140 212 100 208 50 232 Z" fill="#F1AA6B"/>
+      <ellipse cx="85" cy="285" rx="30" ry="22" fill="#F1AA6B"/>
+    </g>
+    <ellipse cx="150" cy="245" rx="92" ry="78" fill="none" stroke-width="6"/>
+    <!-- eyes -->
+    <ellipse cx="112" cy="250" rx="21" ry="23" fill="#E3A23C" stroke-width="4.5"/>
+    <ellipse cx="114" cy="252" rx="12" ry="16" fill="#2D3A47" stroke="none"/>
+    <circle cx="108" cy="244" r="5.5" fill="#fff" stroke="none"/>
+    <ellipse cx="188" cy="250" rx="21" ry="23" fill="#E3A23C" stroke-width="4.5"/>
+    <ellipse cx="186" cy="252" rx="12" ry="16" fill="#2D3A47" stroke="none"/>
+    <circle cx="182" cy="244" r="5.5" fill="#fff" stroke="none"/>
+    <!-- nose, mouth -->
+    <path d="M139 272 Q150 266 161 272 Q157 285 150 288 Q143 285 139 272 Z" fill="#F29BAE" stroke-width="3.5"/>
+    <path d="M150 288 Q150 297 141 299 M150 288 Q150 297 159 299" fill="none" stroke-width="3.5"/>
+    <g fill="none" stroke-width="3"><path d="M96 278 L48 270 M96 288 L50 294 M200 278 L250 270 M200 288 L248 294"/></g>
+  </g>
+
+  <!-- stopwatch -->
+  <g stroke="#2D3A47" stroke-linejoin="round" stroke-linecap="round">
+    <rect x="345" y="98" width="30" height="26" rx="6" fill="#846A72" stroke-width="5"/>
+    <rect x="335" y="86" width="50" height="16" rx="6" fill="#846A72" stroke-width="5"/>
+    <circle cx="360" cy="260" r="118" fill="#F7C8D3" stroke-width="8"/>
+    <circle cx="360" cy="260" r="94" fill="#FFF7E6" stroke-width="4"/>
+    <path d="M360 260 L360 184 A76 76 0 0 1 425 222 Z" fill="#A8B58A" stroke="none"/>
+    <g stroke-width="6"><path d="M360 172 V186 M360 334 V348 M272 260 H286 M434 260 H448"/></g>
+    <path d="M360 260 L412 216" stroke-width="8"/>
+    <circle cx="360" cy="260" r="9" fill="#2D3A47"/>
+    <!-- paws hugging -->
+    <ellipse cx="262" cy="212" rx="44" ry="20" transform="rotate(-18 262 212)" fill="#FFFDF8" stroke-width="5.5"/>
+    <path d="M230 214 L238 206 M244 210 L250 200 M258 204 L262 195" fill="none" stroke-width="3.5"/>
+    <ellipse cx="256" cy="298" rx="44" ry="20" transform="rotate(18 256 298)" fill="#FFFDF8" stroke-width="5.5"/>
+    <path d="M224 292 L232 300 M238 298 L244 308 M252 304 L256 314" fill="none" stroke-width="3.5"/>
+  </g>
+</svg>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import TaskTotals from '../reportComponent/TaskTotal';
 import TagTotals from '../dashboardComp/TagTotals';
+import DailyChart from '../reportComponent/DailyChart';
 
 function Report() {
   const [tasks, setTasks] = useState([]);
@@ -24,6 +25,7 @@ function Report() {
       <h1>Statistic</h1>
       <TaskTotals tasks={tasks} tags={tags} timestamps={timestamps} />
       <TagTotals tasks={tasks} tags={tags} timestamps={timestamps} />
+      <DailyChart tasks={tasks} timestamps={timestamps}></DailyChart>
     </div>
   );
 }
